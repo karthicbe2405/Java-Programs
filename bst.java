@@ -19,6 +19,37 @@ public class Main {
                     temp.right = insert(temp.right,value);
                 return temp;
 }
+    public Node max(Node temp){
+        while(temp.right !=null){
+            temp = temp.right;
+        }
+        return temp;
+    }
+    public Node delete(Node temp,int value){
+        if(temp == null)
+            return temp;
+        if(value < temp.value)
+            temp.left = delete(temp.left,value);
+        else if(value > temp.value)
+            temp.right = delete(temp.right,value);
+        else{
+            if(temp.left == null && temp.right == null){
+                temp = null;
+            }
+            else if(temp.left == null){
+                temp = temp.right;
+            }
+            else if(temp.right == null){
+                temp = temp.left;
+            }
+            else{
+                Node temp1 = max(temp.left);
+                temp.value = temp1.value;
+                temp1 = null;
+            }
+        }
+        return temp;
+    }
     public void inOrder(Node temp){
             if(temp != null){
                 System.out.println(temp.value);
@@ -35,6 +66,10 @@ public class Main {
 		for(int i = 0;i < n;i++){
 		    o1.root = o1.insert(o1.root,scan.nextInt());
 		}
+        o1.inOrder(o1.root);
+        System.out.println("Enter the element to be deleted : ");
+        int del = scan.nextInt();
+        o1.root = o1.delete(o1.root,del);
         o1.inOrder(o1.root);
         //System.out.println(o1.root.left.value);
     }
